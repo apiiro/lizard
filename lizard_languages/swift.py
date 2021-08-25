@@ -10,11 +10,11 @@ from .golike import GoLikeStates
 class SwiftReader(CodeReader, CCppCommentsMixin):
     # pylint: disable=R0903
 
-    FUNC_KEYWORD = 'def'
     ext = ['swift']
     language_names = ['swift']
-    _conditions = set(['if', 'for', 'while', '&&', '||', '?', 'catch',
-                      'case', 'guard'])
+    _conditions = {
+        'if', 'for', 'while', '&&', '||', '?', 'catch', 'case', 'guard'
+    }
 
     def __init__(self, context):
         super(SwiftReader, self).__init__(context)

@@ -11,10 +11,15 @@ class CSharpReader(CLikeReader):
     ext = ['cs']
     language_names = ['csharp']
 
-    _conditions = set(['if', 'for', 'while', '&&', '||', '?', 'catch',
-                      'case', '??'])
+    _conditions = {
+        'if', 'for', 'while', '&&', '||', '?', 'catch', 'case', '??'
+    }
 
     @staticmethod
     def generate_tokens(source_code, addition='', token_class=None):
         return CLikeReader.generate_tokens(
-                source_code, r"|(?:\?\?)", token_class)
+            source_code,
+            r"|(?:\?\?)" +
+            r"|\?\?\=",
+            token_class
+        )

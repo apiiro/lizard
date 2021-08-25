@@ -93,16 +93,6 @@ class Test_parser_for_Swift(unittest.TestCase):
                 ''')
         self.assertEqual(0, len(result))
 
-    def test_interface_with_var(self):
-        result = get_swift_function_list('''
-            protocol p {
-                func f1() -> Double
-                var area: Double { get }
-            }
-            class c { }
-                ''')
-        self.assertEqual(0, len(result))
-
 #https://docs.swift.org/swift-book/LanguageGuide/Initialization.html
     def test_init(self):
         result = get_swift_function_list('''
@@ -226,7 +216,7 @@ class Test_parser_for_Swift(unittest.TestCase):
                 ''')
         self.assertEqual("f", result[0].name)
 
-    def test_generic_function(self):
+    def test_complex_generic_function(self):
         result = get_swift_function_list('''
         func f<C1, C2: Container where (C1.t == C2.t)> (c1: C1, c: C2) -> Bool {}
                 ''')

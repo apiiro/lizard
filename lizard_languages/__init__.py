@@ -17,6 +17,7 @@ from .lua import LuaReader
 from .rust import RustReader
 from .typescript import TypeScriptReader
 from .fortran import FortranReader
+from .kotlin import KotlinReader
 
 
 def languages():
@@ -37,7 +38,8 @@ def languages():
         LuaReader,
         RustReader,
         TypeScriptReader,
-        FortranReader
+        FortranReader,
+        KotlinReader
     ]
 
 
