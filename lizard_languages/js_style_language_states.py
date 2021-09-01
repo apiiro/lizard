@@ -113,9 +113,23 @@ class JavaScriptStyleLanguageStates(CodeStateMachine):  # pylint: disable=R0903
         self.context.add_to_long_function_name(" " + token)
 
     def _expecting_func_opening_bracket(self, token):
+        if token == ':':
+            self.next(self._expecting_default)
+            return
         if token != '{':
             self.started_function = None
         self.next(self._state_global, token)
+
+    def _expecting_default(self, token):
+        self.next(self._function_return_type)
+        if token == '{':
+            self.read_object()
+
+    def _function_return_type(self, token):
+        if token == ';':
+            self.next(self._state_global)
+        elif token == '{':
+            self.next(self._expecting_func_opening_bracket, token)
 
 
 class ES6ObjectStates(JavaScriptStyleLanguageStates):  # pylint: disable=R0903

@@ -1,6 +1,6 @@
 import unittest
 from lizard import  analyze_file, FileAnalyzer, get_extensions
-from lizard_languages import TypeScriptReader
+from lizard_languages import JavaScriptReader
 
 
 def get_ts_function_list(source_code):
@@ -9,7 +9,7 @@ def get_ts_function_list(source_code):
 class Test_tokenizing_TypeScript(unittest.TestCase):
 
     def check_tokens(self, expect, source):
-        tokens = list(TypeScriptReader.generate_tokens(source))
+        tokens = list(JavaScriptReader.generate_tokens(source))
         self.assertEqual(expect, tokens)
 
     def test_simple(self):
