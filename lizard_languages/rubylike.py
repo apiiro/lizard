@@ -98,9 +98,11 @@ class RubylikeStateMachine(CodeStateMachine):
 class RubylikeReader(CodeReader, ScriptLanguageMixIn):
     # pylint: disable=R0903
 
-    _conditions = set(['if', 'until', 'for', 'while', 'and', 'or',
-                       'elsif', 'elseif', 'rescue',
-                       'ensure', 'when', '||', '&&', '?'])
+    _conditions = {
+        'if', 'until', 'for', 'while', 'and', 'or',
+        'elsif', 'elseif', 'rescue',
+        'ensure', 'when', '||', '&&', '?'
+    }
 
     def __init__(self, context):
         super(RubylikeReader, self).__init__(context)

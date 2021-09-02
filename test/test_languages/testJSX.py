@@ -15,37 +15,37 @@ class Test_tokenizing_JSX(unittest.TestCase):
         self.assertEqual(expect, tokens)
 
     def test_simple_standalone(self):
-        self.check_tokens(['<abc />'], '<abc />')
+        self.check_tokens(['<', 'abc', '/>'], '<abc />')
 
     def test_simple_open_closing(self):
-        self.check_tokens(['<abc></abc>'], '<abc></abc>')
+        self.check_tokens(['<abc>', '</abc>'], '<abc></abc>')
 
     def test_open_closing_with_content(self):
-        self.check_tokens(['(', '<abc>xxx  +yyy</abc>', ')'], '(<abc>xxx  +yyy</abc>)')
+        self.check_tokens(['(', '<abc>', 'xxx', '+', 'yyy', '</abc>', ')'], '(<abc>xxx  +yyy</abc>)')
 
     def test_nested(self):
-        self.check_tokens(['(', '<abc>', '<b>xxx</b>', '</abc>', ')'], '(<abc><b>xxx</b></abc>)')
+        self.check_tokens(['(', '<abc>', '<b>', 'xxx', '</b>', '</abc>', ')'], '(<abc><b>xxx</b></abc>)')
 
     def test_nested_save_tag(self):
-        self.check_tokens(['(', '<b>', '<b>xxx</b>', '</b>', ')'], '(<b><b>xxx</b></b>)')
+        self.check_tokens(['(', '<b>', '<b>', 'xxx', '</b>', '</b>', ')'], '(<b><b>xxx</b></b>)')
 
     def test_with_embeded_code(self):
-        self.check_tokens(['<abc>{', 'x', '</abc>'], '<abc>{x}</abc>')
+        self.check_tokens(['<abc>', '{', 'x', '}', '</abc>'], '<abc>{x}</abc>')
 
     def test_with_attributes(self):
-        self.check_tokens(['<abc x="x">a</abc>'], '<abc x="x">a</abc>')
+        self.check_tokens(['<', 'abc', 'x', '=', '"x"', '>', 'a', '</abc>'], '<abc x="x">a</abc>')
 
     def test_with_embeded_attributes(self):
-        self.check_tokens(['y', '<abc x={}>a</abc>', '<a></a>'], '<abc x={y}>a</abc><a></a>')
+        self.check_tokens(['<', 'abc', 'x', '=', '{', 'y', '}', '>', 'a', '</abc>', '<a>', '</a>'], '<abc x={y}>a</abc><a></a>')
 
     def test_less_than(self):
-        self.check_tokens(['a', '<', '3', ' ', 'x', '>'], 'a<3 x>')
+        self.check_tokens(['a', '<', '3', 'x', '>'], 'a<3 x>')
 
     def test_with_less_than2(self):
-        self.check_tokens(['a', '<', 'b', ' ', 'and', ' ', 'c', '>', ' ', 'd'], 'a<b and c> d')
+        self.check_tokens(['a', '<', 'b', 'and', 'c', '>', 'd'], 'a<b and c> d')
 
     def test_complicated_properties(self):
-        self.check_tokens(['data', ' ', '=>', '(', ')', '<StaticQuery render={} />'], '<StaticQuery render={data =>()} />')
+        self.check_tokens(['<', 'StaticQuery', 'render', '=', '{', 'data', '=>', '(', ')', '}', '/>'], '<StaticQuery render={data =>()} />')
 
 
 class Test_parser_for_JavaScript_X(unittest.TestCase):

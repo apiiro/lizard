@@ -179,7 +179,7 @@ class Test_parser_for_Python(unittest.TestCase):
         self.assertEqual("function1.function2", functions[0].name)
         self.assertEqual(4, functions[0].end_line)
         self.assertEqual("function1", functions[1].name)
-        self.assertEqual(5, functions[1].end_line)
+        self.assertEqual(6, functions[1].end_line)
         self.assertEqual(2, functions[1].cyclomatic_complexity)
         self.assertEqual(2, functions[1].max_nesting_depth)
         # will be fixed, should be equal to 1

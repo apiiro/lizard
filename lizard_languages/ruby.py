@@ -7,12 +7,12 @@ from .rubylike import RubylikeReader
 from .script_language import ScriptLanguageMixIn
 
 
-class MyToken(str):
+class RubyToken(str):
     def __new__(cls, value, *_):
-        return super(MyToken, cls).__new__(cls, value.group(0))
+        return super(RubyToken, cls).__new__(cls, value.group(0))
 
     def __init__(self, value):
-        super(MyToken, self).__init__()
+        super(RubyToken, self).__init__()
         self.begin = value.start()
 
 
@@ -39,7 +39,7 @@ class RubyReader(RubylikeReader):
                 r"|:?\@{0,2}\w+\??\!?" +
                 _, matcher)
 
-        matcher = MyToken
+        matcher = RubyToken
         bracket_stack = []
         source = source_code
         while source is not None:

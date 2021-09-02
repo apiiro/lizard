@@ -31,9 +31,6 @@ class KotlinReader(CodeReader, CCppCommentsMixin):
             addition
         )
 
-    def preprocess(self, tokens):
-        return list(t for t in tokens if not t.isspace() or t == '\n')
-
 
 class KotlinStates(GoLikeStates):  # pylint: disable=R0903
 

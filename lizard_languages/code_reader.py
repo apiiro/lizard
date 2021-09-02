@@ -121,11 +121,13 @@ class CodeReader:
         def _generate_tokens(source, add):
             # DO NOT put any sub groups in the regex. Good for performance
             _until_end = r"(?:\\\n|[^\n])*"
-            combined_symbols = ["<<=", ">>=", "||", "&&", "===", "!==",
-                                "==", "!=", "<=", ">=", "->", "=>",
-                                "++", "--", '+=', '-=',
-                                "+", "-", '*', '/',
-                                '*=', '/=', '^=', '&=', '|=', '%=', "..."]
+            combined_symbols = [
+                "<<=", ">>=", "||", "&&", "===", "!==",
+                "==", "!=", "<=", ">=", "->", "=>",
+                "++", "--", '+=', '-=',
+                "+", "-", '*', '/',
+                '*=', '/=', '^=', '&=', '|=', '%=', "..."
+            ]
             token_pattern = re.compile(
                 r"(?:" +
                 r"\/\*.*?\*\/" +
@@ -154,7 +156,7 @@ class CodeReader:
                         macro = ""
                 elif token == "#":
                     macro = token
-                else:
+                elif not token.isspace() or token == '\n':
                     yield token
             if macro:
                 yield macro

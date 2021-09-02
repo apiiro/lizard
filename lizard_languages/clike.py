@@ -39,7 +39,7 @@ class CLikeReader(CodeReader, CCppCommentsMixin):
             elif tilde:
                 tilde = False
                 yield "~" + token
-            elif not token.isspace() or token == '\n':
+            else:
                 macro = self.macro_pattern.match(token)
                 if macro:
                     if macro.group(1) in ('if', 'ifdef', 'elif'):

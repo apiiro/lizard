@@ -21,9 +21,10 @@ class FortranReader(CodeReader, FortranCommentsMixin):
 
     ext = ['f70', 'f90', 'f95', 'f03', 'f08', 'f', 'for', 'ftn', 'fpp']
     language_names = ['fortran']
-    _conditions = set((
+    _conditions = {
         'IF', 'DO', '.AND.', '.OR.', 'CASE',
-        'if', 'do', '.and.', '.or.', 'case'))
+        'if', 'do', '.and.', '.or.', 'case'
+    }
     _blocks = ['PROGRAM', 'MODULE', 'SUBROUTINE', 'FUNCTION', 'TYPE', 'INTERFACE', 'BLOCK', 'IF', 'DO', 'FORALL', 'WHERE', 'SELECT', 'ASSOCIATE']
 
     def __init__(self, context):
@@ -72,7 +73,7 @@ class FortranReader(CodeReader, FortranCommentsMixin):
                 # only the first branch of #if #elif #else
                 # is read by the FortranStateMachine
                 self.macro_disabled = macro_depth != 0
-            elif not token.isspace() or token == '\n':
+            else:
                 yield token
 
 

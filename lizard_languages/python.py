@@ -28,8 +28,10 @@ class PythonIndents:  # pylint: disable=R0902
 class PythonReader(CodeReader, ScriptLanguageMixIn):
     ext = ['py']
     language_names = ['python']
-    _conditions = set(['if', 'for', 'while', 'and', 'or',
-                       'elif', 'except', 'finally'])
+    _conditions = {
+        'if', 'for', 'while', 'and', 'or',
+        'elif', 'except', 'case'
+    }
 
     def __init__(self, context):
         super(PythonReader, self).__init__(context)
@@ -57,8 +59,8 @@ class PythonReader(CodeReader, ScriptLanguageMixIn):
             else:
                 reading_leading_space = True
                 current_leading_spaces = 0
-            if not token.isspace() or token == '\n':
-                yield token
+
+            yield token
         indents.reset()
 
 
