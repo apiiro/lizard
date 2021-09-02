@@ -117,7 +117,7 @@ class JavaScriptStyleLanguageStates(CodeStateMachine):  # pylint: disable=R0903
         if token == ':':
             self.next(self._expecting_default)
             return
-        if token != '{':
+        if token != '{' and token != '}':
             self.started_function = None
         self.next(self._state_global, token)
 

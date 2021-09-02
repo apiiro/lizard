@@ -60,4 +60,4 @@ class Test_parser_for_JavaScript_X(unittest.TestCase):
         '''
 
         functions = get_js_function_list(code)
-        self.assertEqual("(anonymous)", functions[0].name)
+        self.assertEqual("=>", functions[0].name)
