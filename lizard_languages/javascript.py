@@ -29,7 +29,9 @@ class JavaScriptReader(CodeReader, CCppCommentsMixin):
                    r"|`.*?`" + \
                    r"|/>" + \
                    r"|(?:\w+\?)"
-        return CodeReader.generate_tokens(source_code, addition, token_class)
+        for token in CodeReader.generate_tokens(source_code, addition, token_class):
+            if not token.isspace() or token == '\n':
+                yield token
 
     def __init__(self, context):
         super(JavaScriptReader, self).__init__(context)

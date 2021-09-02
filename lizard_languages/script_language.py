@@ -18,4 +18,5 @@ class ScriptLanguageMixIn(object):
         return CodeReader.generate_tokens(
             source_code,
             r"|\#" + _until_end + addition,
-            match_holder)
+            match_holder
+        )

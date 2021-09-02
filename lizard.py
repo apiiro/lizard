@@ -488,7 +488,7 @@ class FileInfoBuilder(object):
 def preprocessing(tokens, reader):
     if hasattr(reader, "preprocess"):
         return reader.preprocess(tokens)
-    return tokens
+    return (t for t in tokens if not t.isspace() or t == '\n')
 
 
 def comment_counter(tokens, reader):

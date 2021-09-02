@@ -31,6 +31,7 @@ class SwiftReader(CodeReader, CCppCommentsMixin):
             addition)
 
     def preprocess(self, tokens):
+        tokens = list(t for t in tokens if not t.isspace() or t == '\n')
 
         def replace_label(tokens, target, replace):
             for i in range(0, len(tokens) - len(target)):
