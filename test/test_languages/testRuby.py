@@ -22,7 +22,7 @@ class Test_tokenizing_Ruby(unittest.TestCase):
 
     def test_should_not_confuse_division_as_regx(self):
         self.check_tokens(['a', '/', 'b', ',', 'a', '/', 'b'], 'a/b,a/b')
-        self.check_tokens(['3453', ' ', '/', 'b', ',', 'a', '/', 'b'], '3453 /b,a/b')
+        self.check_tokens(['3453', '/', 'b', ',', 'a', '/', 'b'], '3453 /b,a/b')
 
     def test_tokenizing_ruby_regular_expression(self):
         self.check_tokens(['a', '=', '/ab/'], 'a=/ab/')
