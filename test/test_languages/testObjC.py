@@ -1,5 +1,6 @@
 import unittest
-from lizard import  analyze_file
+
+from lizard import analyze_file
 
 
 class Test_objc_lizard(unittest.TestCase):

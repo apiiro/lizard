@@ -1,6 +1,7 @@
-from flask import Flask, request, url_for, render_template
+from flask import Flask, request, render_template
+
 from lizard import analyze_file
-import os
+
 app = Flask(__name__)
 app.config['DEBUG'] = True
 
@@ -18,4 +19,3 @@ def analyse():
 @app.errorhandler(404)
 def page_not_found(e):
     return 'Sorry, nothing at this URL.', 404
-

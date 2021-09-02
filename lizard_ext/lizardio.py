@@ -2,6 +2,7 @@
 Fan in and Fan out (again)
 '''
 from collections import Counter
+
 from .extension_base import ExtensionBase
 
 

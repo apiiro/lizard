@@ -1,5 +1,6 @@
 import unittest
-from lizard import analyze_file, FileAnalyzer, get_extensions
+
+from lizard import analyze_file
 
 
 def get_rust_fileinfo(source_code):

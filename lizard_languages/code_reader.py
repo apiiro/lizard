@@ -8,6 +8,7 @@ from copy import copy
 
 class CodeStateMachine(object):
     """ the state machine """
+
     # pylint: disable=R0903
     # pylint: disable=R0902
     # pylint: disable=E1102
@@ -67,7 +68,9 @@ class CodeStateMachine(object):
                     func(self, token)
                 if self.br_count == 0 and end_state is not None:
                     self.next(getattr(self, end_state))
+
             return read_until_matching_brackets
+
         return decorator
 
     @staticmethod
@@ -79,7 +82,9 @@ class CodeStateMachine(object):
                     self.rut_tokens = []
                 else:
                     self.rut_tokens.append(token)
+
             return read_until_then_token
+
         return decorator
 
 
@@ -109,6 +114,7 @@ class CodeReader:
     def generate_tokens(source_code, addition='', token_class=None):
         def create_token(match):
             return match.group(0)
+
         if not token_class:
             token_class = create_token
 

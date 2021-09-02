@@ -21,7 +21,7 @@ class LizardExtension:  # pylint: disable=R0903
                     reader.context.current_function.statement_count += 1
                 if token == "{":
                     if block_count != 0:
-                        reader.context.\
+                        reader.context. \
                             current_function.statement_count += 1
                     block_count += 1
                 if token == "}":

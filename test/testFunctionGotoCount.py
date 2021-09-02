@@ -1,6 +1,8 @@
 import unittest
-from .testHelpers import get_cpp_function_list_with_extension
+
 from lizard_ext.lizardgotocount import LizardExtension as GotoCounter
+from .testHelpers import get_cpp_function_list_with_extension
+
 
 class TestFunctionGotoCount(unittest.TestCase):
 
@@ -15,4 +17,3 @@ class TestFunctionGotoCount(unittest.TestCase):
     def test_function_with_goto_count_as_1(self):
         result = get_cpp_function_list_with_extension("int fun(){goto label;return 1;}", GotoCounter())
         self.assertEqual(1, result[0].goto_count)
-

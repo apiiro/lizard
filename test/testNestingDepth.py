@@ -1,6 +1,7 @@
 import unittest
-from .testHelpers import get_cpp_function_list_with_extension
+
 from lizard_ext.lizardnd import LizardExtension as NestDepth
+from .testHelpers import get_cpp_function_list_with_extension
 
 
 def get_cpp_with_nestdepth(source):
@@ -152,4 +153,3 @@ class TestCppNestingDepth(unittest.TestCase):
             }
         }""")
         self.assertEqual(2, result[0].max_nesting_depth)
-

@@ -1,8 +1,10 @@
-import unittest
-import platform
-from mock import patch
-from lizard import get_all_source_files
 import os
+import platform
+import unittest
+
+from mock import patch
+
+from lizard import get_all_source_files
 
 
 def which_system():

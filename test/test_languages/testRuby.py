@@ -1,11 +1,13 @@
 import unittest
-from lizard import analyze_file, FileAnalyzer, get_extensions
+
+from lizard import analyze_file
 from lizard_languages import RubyReader
 
 
 def get_ruby_function_list(source_code):
     return analyze_file.analyze_source_code(
         "a.rb", source_code).function_list
+
 
 class Test_tokenizing_Ruby(unittest.TestCase):
 
@@ -19,8 +21,8 @@ class Test_tokenizing_Ruby(unittest.TestCase):
         self.check_tokens([r'/a/igm'], r'/a/igm')
 
     def test_should_not_confuse_division_as_regx(self):
-        self.check_tokens(['a','/','b',',','a','/','b'], 'a/b,a/b')
-        self.check_tokens(['3453',' ','/','b',',','a','/','b'], '3453 /b,a/b')
+        self.check_tokens(['a', '/', 'b', ',', 'a', '/', 'b'], 'a/b,a/b')
+        self.check_tokens(['3453', ' ', '/', 'b', ',', 'a', '/', 'b'], '3453 /b,a/b')
 
     def test_tokenizing_ruby_regular_expression(self):
         self.check_tokens(['a', '=', '/ab/'], 'a=/ab/')
@@ -35,10 +37,10 @@ class Test_tokenizing_Ruby(unittest.TestCase):
         self.check_tokens(['{', '}'], r'''{}''')
 
     def test_tokenizing_string_with_formatter(self):
-        self.check_tokens(['""', '${', '1', '}', '"a"' ], r'''"#{1}a"''')
+        self.check_tokens(['""', '${', '1', '}', '"a"'], r'''"#{1}a"''')
 
     def test_tokenizing_string_with_string(self):
-        self.check_tokens(['""', '${', '"a"', '}', '""' ], r'''"#{"a"}"''')
+        self.check_tokens(['""', '${', '"a"', '}', '""'], r'''"#{"a"}"''')
 
     def test_tokenizing_string_with_string2(self):
         self.check_tokens(['""', '${', '"/"', '${', '}', '""', '}', '""'], r'''"#{"/#{}"}"''')
@@ -72,7 +74,6 @@ class Test_tokenizing_Ruby(unittest.TestCase):
     def test_special_method_names(self):
         self.check_tokens(['a!'], r'''a!''')
         self.check_tokens(['a?'], r'''a?''')
-
 
 
 class Test_parser_for_Ruby(unittest.TestCase):
@@ -321,7 +322,6 @@ class Test_parser_for_Ruby_if_while_for(unittest.TestCase):
                 ''')
         self.assertEqual(4, result[0].nloc)
 
-
     def test_rspec_it(self):
         result = get_ruby_function_list('''
             describe 'xx' do
@@ -363,11 +363,6 @@ class Test_parser_for_Ruby_if_while_for(unittest.TestCase):
             end
                 ''')
         self.assertEqual(0, len(result))
-
-
-
-
-
 
 
 class Test_parser_for_Ruby_def(unittest.TestCase):

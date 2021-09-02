@@ -1,8 +1,11 @@
 import unittest
-from mock import Mock, patch
+
+from mock import Mock
+
 from lizard_ext.lizardcpre import LizardExtension as CPreprocessor
-from .testHelpers import get_cpp_function_list_with_extension
 from lizard_languages.code_reader import CodeReader
+from .testHelpers import get_cpp_function_list_with_extension
+
 generate_tokens = CodeReader.generate_tokens
 
 
@@ -10,6 +13,7 @@ def process_code(code, reader=None):
     reader = reader or Mock(ext=["c"])
     tokens = generate_tokens(code)
     return [t for t in CPreprocessor()(tokens, reader)]
+
 
 class TestCPreprocessor(unittest.TestCase):
 
@@ -22,12 +26,12 @@ class TestCPreprocessor(unittest.TestCase):
 
     def test_should_remove_preprocessor_tokens(self):
         tokens = process_code("#blah a b c\n1")
-        self.assertEqual(["\n","1"], tokens)
+        self.assertEqual(["\n", "1"], tokens)
 
     def test_should_work_only_for_clike_reader(self):
         reader = Mock(ext=[])
         tokens = process_code("#\n1", reader)
-        self.assertEqual(['#',"\n","1"], tokens)
+        self.assertEqual(['#', "\n", "1"], tokens)
 
     def test_should_ignore_tokens_in_else(self):
         tokens = process_code("""
@@ -66,7 +70,6 @@ class TestCPreprocessor(unittest.TestCase):
         self.assertNotIn("5", tokens)
         self.assertNotIn("6", tokens)
 
-
     def test_should_handle_nested_ifs(self):
         tokens = process_code("""
         #if x
@@ -92,7 +95,6 @@ class TestCPreprocessor(unittest.TestCase):
         self.assertIn("1", tokens)
         self.assertNotIn("2", tokens)
         self.assertIn("4", tokens)
-
 
 
 def analyze_with_extension(code):

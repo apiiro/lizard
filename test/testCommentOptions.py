@@ -1,6 +1,7 @@
 import unittest
-from mock import Mock, patch
+
 from .testHelpers import get_cpp_function_list
+
 
 class TestCommentOptions(unittest.TestCase):
 
@@ -19,4 +20,3 @@ class TestCommentOptions(unittest.TestCase):
     def test_generated_code_should_be_ignored(self):
         function_list = get_cpp_function_list("/* GENERATED CODE */void foo(){}")
         self.assertEqual(0, len(function_list))
-

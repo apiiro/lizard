@@ -1,9 +1,10 @@
 '''
 Language parser for Scala
 '''
-from .code_reader import CodeReader
 from .clike import CCppCommentsMixin
+from .code_reader import CodeReader
 from .golike import GoLikeStates
+
 __author__ = 'David Baum'
 
 
@@ -13,7 +14,7 @@ class ScalaReader(CodeReader, CCppCommentsMixin):
     ext = ['scala']
     language_names = ['scala']
     _conditions = set(['if', 'for', 'while', '&&', '||', '?', 'catch',
-                      'case', 'do'])
+                       'case', 'do'])
 
     def __init__(self, context):
         super(ScalaReader, self).__init__(context)

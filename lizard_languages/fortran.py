@@ -3,6 +3,7 @@ Language parser for Fortran.
 '''
 
 import re
+
 from .code_reader import CodeStateMachine, CodeReader
 
 
@@ -53,7 +54,7 @@ class FortranReader(CodeReader, FortranCommentsMixin):
         new_line = True
         for token in tokens:
             if new_line and token[0].upper() in ('c', 'C', '*'):
-                token = '!'+token[1:]
+                token = '!' + token[1:]
             new_line = token == '\n'
             macro = re.match(r'#\s*(\w+)', token)
             if macro:
@@ -74,11 +75,12 @@ class FortranReader(CodeReader, FortranCommentsMixin):
             elif not token.isspace() or token == '\n':
                 yield token
 
+
 # pylint: disable=R0903
 class FortranStates(CodeStateMachine):
     # pylint: disable=line-too-long
     # pylint: disable=protected-access
-    _ends = re.compile('(?:'+'|'.join(r'END\s*{0}'.format(_) for _ in FortranReader._blocks)+')', re.I)
+    _ends = re.compile('(?:' + '|'.join(r'END\s*{0}'.format(_) for _ in FortranReader._blocks) + ')', re.I)
 
     def __init__(self, context, reader):
         super(FortranStates, self).__init__(context)
@@ -99,7 +101,7 @@ class FortranStates(CodeStateMachine):
         token_upper = token.upper()
         if token_upper in ('%', '::', 'SAVE', 'DATA'):
             self._state = self._ignore_next
-        elif token_upper in ('INTEGER', 'REAL','COMPLEX','LOGICAL', 'CHARACTER'):
+        elif token_upper in ('INTEGER', 'REAL', 'COMPLEX', 'LOGICAL', 'CHARACTER'):
             self._state = self._ignore_var
         elif token == '(':
             self.next(self._ignore_expr, token)

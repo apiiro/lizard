@@ -1,9 +1,12 @@
 import unittest
-from lizard import analyze_file, FileAnalyzer, get_extensions
+
+from lizard import analyze_file
+
 
 def get_gdscript_function_list(source_code):
     return analyze_file.analyze_source_code(
         "a.gd", source_code).function_list
+
 
 class TestGDScript(unittest.TestCase):
     def test_empty(self):

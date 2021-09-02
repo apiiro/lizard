@@ -77,4 +77,4 @@ IGNORED_WORDS = set((
     'require',
     '@',
     'end'
-    ))
+))

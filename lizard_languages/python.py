@@ -13,7 +13,7 @@ class PythonIndents:  # pylint: disable=R0902
         self.indents = [0]
         self.context = context
 
-    def set_nesting(self, spaces, token = ""):
+    def set_nesting(self, spaces, token=""):
         while self.indents[-1] > spaces and (not token.startswith(")")):
             self.indents.pop()
             self.context.pop_nesting()
@@ -26,11 +26,10 @@ class PythonIndents:  # pylint: disable=R0902
 
 
 class PythonReader(CodeReader, ScriptLanguageMixIn):
-
     ext = ['py']
     language_names = ['python']
     _conditions = set(['if', 'for', 'while', 'and', 'or',
-                      'elif', 'except', 'finally'])
+                       'elif', 'except', 'finally'])
 
     def __init__(self, context):
         super(PythonReader, self).__init__(context)
@@ -39,8 +38,8 @@ class PythonReader(CodeReader, ScriptLanguageMixIn):
     @staticmethod
     def generate_tokens(source_code, addition='', token_class=None):
         return ScriptLanguageMixIn.generate_common_tokens(
-                source_code,
-                r"|\'\'\'.*?\'\'\'" + r'|\"\"\".*?\"\"\"', token_class)
+            source_code,
+            r"|\'\'\'.*?\'\'\'" + r'|\"\"\".*?\"\"\"', token_class)
 
     def preprocess(self, tokens):
         indents = PythonIndents(self.context)

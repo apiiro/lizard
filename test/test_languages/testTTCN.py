@@ -1,6 +1,6 @@
 import unittest
-import inspect
-from lizard import analyze_file, FileAnalyzer, get_extensions
+
+from lizard import analyze_file
 
 
 def get_ttcn_function_list(source_code):

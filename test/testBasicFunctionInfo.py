@@ -1,6 +1,7 @@
 import unittest
-from mock import Mock, patch
+
 from .testHelpers import get_cpp_fileinfo, get_cpp_function_list
+
 
 class Test_Token_Count(unittest.TestCase):
 
@@ -31,6 +32,7 @@ class Test_Token_Count(unittest.TestCase):
     def test_one_function_with_comments_only(self):
         result = get_cpp_function_list("int fun(){/**/}")
         self.assertEqual(5, result[0].token_count)
+
 
 class TestNLOC(unittest.TestCase):
 
@@ -93,6 +95,7 @@ class TestLOC(unittest.TestCase):
           4*/
                 }''')
         self.assertEqual(5, result[0].end_line)
+
 
 class TestFileNLOC(unittest.TestCase):
 

@@ -2,8 +2,9 @@
 Language parser for C, C++ -like languages.
 '''
 
-import re
 import itertools
+import re
+
 from .code_reader import CodeStateMachine, CodeReader
 
 
@@ -26,9 +27,9 @@ class CLikeReader(CodeReader, CCppCommentsMixin):
     def __init__(self, context):
         super(CLikeReader, self).__init__(context)
         self.parallel_states = (
-                CLikeStates(context),
-                CLikeNestingStackStates(context),
-                CppRValueRefStates(context))
+            CLikeStates(context),
+            CLikeNestingStackStates(context),
+            CppRValueRefStates(context))
 
     def preprocess(self, tokens):
         tilde = False
@@ -182,7 +183,7 @@ class CLikeStates(CodeStateMachine):
             self.context.add_to_function_name(' ' + token)
 
     def _state_name_with_space(self, token):
-        self._state = self._state_operator\
+        self._state = self._state_operator \
             if token == 'operator' else self._state_function
         self.context.add_to_function_name(token)
 

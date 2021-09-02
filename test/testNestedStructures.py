@@ -1,8 +1,8 @@
 import unittest
 
+from lizard_ext.lizardns import LizardExtension as NestedStructure
 from .testHelpers import get_cpp_function_list_with_extension, \
     get_python_function_list_with_extension
-from lizard_ext.lizardns import LizardExtension as NestedStructure
 
 
 def process_cpp(source):
@@ -376,7 +376,7 @@ class TestCppNestedStructures(unittest.TestCase):
         self.assertEqual(1, result[0].max_nested_structures)
 
 
-class X: #TestPythonNestedStructures(unittest.TestCase):
+class X:  # TestPythonNestedStructures(unittest.TestCase):
 
     def test_no_structures(self):
         result = process_python("def fun():\n pass")

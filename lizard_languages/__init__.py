@@ -1,22 +1,22 @@
 ''' programming languages of lizard '''
 
 from .clike import CLikeReader
-from .java import JavaReader
-from .javascript import JavaScriptReader
-from .python import PythonReader
-from .objc import ObjCReader
-from .ttcn import TTCNReader
-from .swift import SwiftReader
-from .ruby import RubyReader
 from .csharp import CSharpReader
-from .php import PHPReader
-from .scala import ScalaReader
+from .fortran import FortranReader
 from .gdscript import GDScriptReader
 from .go import GoReader
-from .lua import LuaReader
-from .rust import RustReader
-from .fortran import FortranReader
+from .java import JavaReader
+from .javascript import JavaScriptReader
 from .kotlin import KotlinReader
+from .lua import LuaReader
+from .objc import ObjCReader
+from .php import PHPReader
+from .python import PythonReader
+from .ruby import RubyReader
+from .rust import RustReader
+from .scala import ScalaReader
+from .swift import SwiftReader
+from .ttcn import TTCNReader
 
 
 def languages():

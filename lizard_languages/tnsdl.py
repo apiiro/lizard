@@ -2,15 +2,14 @@
 lizard support for TNSDL.
 TNSDL is an in-house programming language of Nokia.
 '''
-import re
-from .code_reader import CodeReader
 from .clike import CCppCommentsMixin
+from .code_reader import CodeReader
+
 
 # pylint: disable-all
 
 
 class SDLReader(CodeReader, CCppCommentsMixin):
-
     ext = ['sdl']
     language_names = ['tnsdl']
 

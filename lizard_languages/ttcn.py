@@ -1,8 +1,9 @@
 ''' Language parser for TTCN-3 '''
 
 import re
-from .code_reader import CodeReader
+
 from .clike import CLikeReader, CLikeStates, CLikeNestingStackStates
+from .code_reader import CodeReader
 
 
 class TTCNReader(CLikeReader):  # pylint: disable=R0903
@@ -17,8 +18,8 @@ class TTCNReader(CLikeReader):  # pylint: disable=R0903
     def __init__(self, context):
         super(TTCNReader, self).__init__(context)
         self.parallel_states = [
-                CLikeNestingStackStates(context),
-                TTCNStates(context)]
+            CLikeNestingStackStates(context),
+            TTCNStates(context)]
 
     @staticmethod
     def generate_tokens(source_code, addition='', token_class=None):

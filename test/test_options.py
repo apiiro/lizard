@@ -1,7 +1,10 @@
-import unittest
-from lizard import parse_args
-from mock import patch
 import sys
+import unittest
+
+from mock import patch
+
+from lizard import parse_args
+
 try:
     from StringIO import StringIO
 except ImportError:

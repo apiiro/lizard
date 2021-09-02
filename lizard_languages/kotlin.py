@@ -2,8 +2,8 @@
 Language parser for Apple Swift
 '''
 
-from .code_reader import CodeReader, CodeStateMachine
 from .clike import CCppCommentsMixin
+from .code_reader import CodeReader
 from .golike import GoLikeStates
 
 

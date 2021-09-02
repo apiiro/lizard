@@ -5,8 +5,9 @@ This module extends the default output formatting to include HTML.
 '''
 
 from __future__ import print_function
-import sys
+
 import datetime
+import sys
 
 
 def html_output(result, options, *_):
@@ -14,7 +15,7 @@ def html_output(result, options, *_):
         from jinja2 import Template
     except ImportError:
         sys.stderr.write(
-                "HTML Output depends on jinja2. `pip install jinja2` first")
+            "HTML Output depends on jinja2. `pip install jinja2` first")
         sys.exit(2)
 
     file_list = []
@@ -29,15 +30,14 @@ def html_output(result, options, *_):
                     source_file_dict["functions"] = func_list
         file_list.append(source_file_dict)
     output = Template(TEMPLATE).render(
-            title='Lizard code complexity report',
-            date=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'),
-            thresholds=options.thresholds, files=file_list)
+        title='Lizard code complexity report',
+        date=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'),
+        thresholds=options.thresholds, files=file_list)
     print(output)
     return 0
 
 
 def _create_dict(obj):
-
     return obj.__dict__
 
 

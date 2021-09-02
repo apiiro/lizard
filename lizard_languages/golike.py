@@ -55,4 +55,5 @@ class GoLikeStates(CodeStateMachine):  # pylint: disable=R0903
         def callback():
             self._state = self._state_global
             self.context.end_of_function()
+
         self.sub_state(self.statemachine_clone(), callback)

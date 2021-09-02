@@ -1,4 +1,5 @@
 import unittest
+
 from lizard import FileAnalyzer, get_extensions
 from lizard_ext.lizardio import LizardExtension as FanInOut
 
@@ -9,10 +10,12 @@ def fanio(*code):
     processed with the io extension.
     '''
     ext = FanInOut()
+
     def process(ext, code):
         result = FileAnalyzer(get_extensions([ext])).analyze_source_code("a.cpp", code)
         list(ext.cross_file_process([result]))
         return result
+
     results = [process(ext, code) for code in code]
     return results[0].function_list[0]
 
@@ -85,16 +88,16 @@ class TestCombinedResult(unittest.TestCase):
 
     def test_1_fan_in_from_another_source_file(self):
         result = fanio(
-                """ int fun(){ } """,
-                """ int bar(){ fun() } """
-                )
+            """ int fun(){ } """,
+            """ int bar(){ fun() } """
+        )
         self.assertEqual(1, result.fan_in)
 
     def test_1_fan_out_to_another_source_file(self):
         result = fanio(
-                """ int fun(){ bar()} """,
-                """ int bar(){ } """
-                )
+            """ int fun(){ bar()} """,
+            """ int bar(){ } """
+        )
         self.assertEqual(1, result.fan_out)
 
 

@@ -1,6 +1,8 @@
 import unittest
-from .testHelpers import get_cpp_function_list_with_extension
+
 from lizard_ext.lizardexitcount import LizardExtension as ExitCounter
+from .testHelpers import get_cpp_function_list_with_extension
+
 
 class TestFunctionExitCount(unittest.TestCase):
 

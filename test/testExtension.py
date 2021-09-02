@@ -1,9 +1,11 @@
+import importlib
 import unittest
+
 from mock import Mock, patch
+
+from lizard import OutputScheme, FileInformation, FunctionInfo
 from lizard import get_extensions, FileAnalyzer
 from lizard_ext.lizardio import LizardExtension as FanInOut
-from lizard import OutputScheme, FileInformation, FunctionInfo
-import importlib
 
 
 class FakeExtension:
@@ -55,7 +57,6 @@ class Test_using_multiple_base_extensions(unittest.TestCase):
     def test_reduce_func_in_lizardio(self):
         lizard_object = None
         self.assertRaises((AttributeError, TypeError, ValueError), list(self.ext.cross_file_process([lizard_object])))
-
 
     def test_all_extension_simultaneously(self):
         list(self.ext.cross_file_process([self.lizard_object]))

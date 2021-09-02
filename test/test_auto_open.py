@@ -1,9 +1,10 @@
 # coding=utf-8
-import unittest
 import codecs
 import io
 import os
+import unittest
 from tempfile import NamedTemporaryFile
+
 from lizard_ext import auto_open, auto_read
 
 

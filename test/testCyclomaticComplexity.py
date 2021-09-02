@@ -1,6 +1,7 @@
+import pytest
+
 from .testHelpers import get_cpp_function_list
 
-import pytest
 
 @pytest.mark.parametrize(
     "description,code,ccn",

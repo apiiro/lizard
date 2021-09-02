@@ -1,4 +1,5 @@
 import unittest
+
 from lizard import analyze_file
 
 
@@ -55,9 +56,8 @@ class TestJava(unittest.TestCase):
 
     def test_generic_type_with_extends(self):
         result = get_java_function_list("class B<T extends C> {void fun(T t) {}}")
-         # actual "B<T::fun"
+        # actual "B<T::fun"
         self.assertEqual("B::fun", result[0].name)
-
 
     def test_generic_type_with_question_mark(self):
         result = get_java_function_list("void A(){ List<? extends x> list;}}")

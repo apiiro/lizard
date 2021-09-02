@@ -118,11 +118,11 @@ def _create_function_item(doc, number, file_name, func, verbose):
     if verbose:
         item.setAttribute(
             "name", "%s at %s:%s" %
-            (func.long_name, file_name, func.start_line))
+                    (func.long_name, file_name, func.start_line))
     else:
         item.setAttribute(
             "name", "%s(...) at %s:%s" %
-            (func.name, file_name, func.start_line))
+                    (func.name, file_name, func.start_line))
     value1 = doc.createElement("value")
     text1 = doc.createTextNode(str(number))
     value1.appendChild(text1)

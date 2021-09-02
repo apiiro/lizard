@@ -1,5 +1,6 @@
 import unittest
-from lizard import  analyze_file, FileAnalyzer, get_extensions
+
+from lizard import analyze_file
 from lizard_languages import JavaScriptReader
 
 
@@ -22,8 +23,8 @@ class Test_tokenizing_JavaScript(unittest.TestCase):
         self.check_tokens([r'/a/igm'], r'/a/igm')
 
     def test_should_not_confuse_division_as_regx(self):
-        self.check_tokens(['a','/','b',',','a','/','b'], 'a/b,a/b')
-        self.check_tokens(['3453',' ','/','b',',','a','/','b'], '3453 /b,a/b')
+        self.check_tokens(['a', '/', 'b', ',', 'a', '/', 'b'], 'a/b,a/b')
+        self.check_tokens(['3453', ' ', '/', 'b', ',', 'a', '/', 'b'], '3453 /b,a/b')
 
     def test_tokenizing_javascript_regular_expression1(self):
         self.check_tokens(['a', '=', '/ab/'], 'a=/ab/')
@@ -36,6 +37,7 @@ class Test_tokenizing_JavaScript(unittest.TestCase):
 
     def test_tokenizing_javascript_multiple_line_string(self):
         self.check_tokens(['"aaa\\\nbbb"'], '"aaa\\\nbbb"')
+
 
 class Test_parser_for_JavaScript(unittest.TestCase):
 

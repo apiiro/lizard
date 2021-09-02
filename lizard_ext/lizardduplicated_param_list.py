@@ -2,8 +2,8 @@
 Get Duplicated parameter lists
 '''
 from collections import Counter
-from .extension_base import ExtensionBase
 
+from .extension_base import ExtensionBase
 
 DEFAULT_MIN_PARAM_COUNT = 5
 
@@ -27,12 +27,12 @@ class LizardExtension(ExtensionBase):
         saved_file_infos = []
         for fileinfo in fileinfos:
             flt = [
-                    f for f in fileinfo.function_list
-                    if len(f.parameters) >= DEFAULT_MIN_PARAM_COUNT
-                 ]
+                f for f in fileinfo.function_list
+                if len(f.parameters) >= DEFAULT_MIN_PARAM_COUNT
+            ]
             self.all_count.update(self._parameters(f) for f in flt)
             self.all_count_per_file.update(
-                    set(self._parameters(f) for f in flt))
+                set(self._parameters(f) for f in flt))
             for flist in fileinfo.function_list:
                 flist.parameter_list_duplicates = 0
                 flist.parameter_list_duplicated_in_files = 0

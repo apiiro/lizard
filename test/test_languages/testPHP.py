@@ -1,5 +1,6 @@
 import unittest
-from lizard import  analyze_file, FileAnalyzer, get_extensions
+
+from lizard import analyze_file
 from lizard_languages import PHPReader
 
 

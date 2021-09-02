@@ -2,8 +2,8 @@
 Language parser for Go lang
 '''
 
-from .code_reader import CodeReader
 from .clike import CCppCommentsMixin
+from .code_reader import CodeReader
 from .golike import GoLikeStates
 
 

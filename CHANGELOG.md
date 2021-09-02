@@ -4,7 +4,6 @@
 
 Add Fortran to the language supported
 
-
 ## 1.17.7
 
 Bug fixing. `typedef` being read properly.
@@ -15,8 +14,7 @@ Bug fixing. `.mm` file was not recognized as object-c(++) file.
 
 ## 1.17.5
 
-Bug fixing in function parameter names. Previously if the parameter has
-default value, it will take the value as the parameter name.
+Bug fixing in function parameter names. Previously if the parameter has default value, it will take the value as the parameter name.
 
 ## 1.17.3
 
@@ -32,8 +30,7 @@ Fix HTML Output template problem.
 
 ## 1.17.0
 
-Support JavaScript with ES6 and JSX.
-Support Rust
+Support JavaScript with ES6 and JSX. Support Rust
 
 ## 1.16.6
 
@@ -44,7 +41,6 @@ Bug fixes:
 'guard' keyword should be counted.
 
 '-o' or '--output_file' parameter added.
-
 
 ## 1.16.3
 
@@ -60,22 +56,17 @@ Fix a bug in MSVS format output.
 
 ## 1.15.6
 
-Minor fix for the average NCSS (lines of code) in the XML output.
-Previously, the average NCSS per function included code outside any
-function. Now this is fixed.
-
+Minor fix for the average NCSS (lines of code) in the XML output. Previously, the average NCSS per function included code outside any function. Now this is fixed.
 
 ## 1.15.2
 
-An important new feature -- duplicate detector -- in the form of an
-extension.
+An important new feature -- duplicate detector -- in the form of an extension.
 
 Usage:
 
     lizard -Eduplicate
 
-The current version hasn't had any performance optimization yet. Yet, it
-can scan 1000 cpp files in less than 2 minutes.
+The current version hasn't had any performance optimization yet. Yet, it can scan 1000 cpp files in less than 2 minutes.
 
 Code after comments containing "GENERATED CODE" will be ignored.
 
@@ -83,27 +74,26 @@ Code after comments containing "GENERATED CODE" will be ignored.
 
 in
 
-  Class<?>[] testClasses = {String.class};
+Class<?>[] testClasses = {String.class};
 
 The ? wouldn't be counted as CC.
 
 A minor fix for the --version option
 
-
 ## 1.14.0
 
 Support CSV & HTML format output
-
 
 ## 1.13.0
 
 No new feature. Just switch to new pypi server.
 
-
 ### Added
+
 - Option to ignore any warnings with '-i -1' (negative argument for the count).
 
 ## [0.12.7] - 2016-11-1
+
 - 2016.04.2 Support PHP.
 - 2016.03.26 Support C#.
 - 2016.02.2 Add option -EMcCabe for ignoring fall-through switch/cases, thanks to @@vicgonzalez
@@ -119,5 +109,4 @@ No new feature. Just switch to new pypi server.
 - 2014.04.06 Remove option -d (ignore duplicated content), and make it default
 - 2014.04.06 Remove option -p (no preprocessor count), and a '#if' will always be counted in cyclomatic complexity
 - 2014.03.31 Support JavaScript!
-- 2014.03.22 Change the -v (--verbose) option to -V. This is because -v
-  will be used for --version.
+- 2014.03.22 Change the -v (--verbose) option to -V. This is because -v will be used for --version.

@@ -1,7 +1,8 @@
-from lizard import main
-import cProfile, pstats, StringIO
-import sys
+import StringIO
+import cProfile
+import pstats
 
+from lizard import main
 
 if __name__ == "__main__":
     pr = cProfile.Profile()
@@ -12,4 +13,5 @@ if __name__ == "__main__":
     sortby = 'tottime'
     ps = pstats.Stats(pr, stream=s).sort_stats(sortby)
     ps.print_stats()
-    print s.getvalue()
+    print
+    s.getvalue()

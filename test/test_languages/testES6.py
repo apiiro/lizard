@@ -1,10 +1,12 @@
 import unittest
-from lizard import  analyze_file, FileAnalyzer, get_extensions
+
+from lizard import analyze_file
 from lizard_languages import JavaScriptReader
 
 
 def get_js_function_list(source_code):
     return analyze_file.analyze_source_code("a.js", source_code).function_list
+
 
 class Test_tokenizing_ES6(unittest.TestCase):
 
@@ -19,7 +21,8 @@ class Test_tokenizing_ES6(unittest.TestCase):
         self.check_tokens(["`abc\ndef`"], """`abc\ndef`""")
 
     def xtest_tokenizing_string_with_formatter(self):
-        self.check_tokens(['""', '${', '1', '}', '"a"' ], r'''"${1}a"''')
+        self.check_tokens(['""', '${', '1', '}', '"a"'], r'''"${1}a"''')
+
 
 class Test_parser_for_JavaScript_ES6(unittest.TestCase):
 

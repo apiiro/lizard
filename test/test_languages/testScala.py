@@ -1,7 +1,8 @@
 __author__ = 'David Baum'
 
 import unittest
-from lizard import analyze_file, FileAnalyzer, get_extensions
+
+from lizard import analyze_file
 
 
 def get_scala_function_list(source_code):
@@ -23,6 +24,7 @@ class TestScala(unittest.TestCase):
             }
                 ''')
         self.assertEqual(0, len(result))
+
     def test_function(self):
         result = get_scala_function_list('''
             def foo() { }

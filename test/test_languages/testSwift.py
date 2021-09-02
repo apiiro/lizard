@@ -1,6 +1,6 @@
 import unittest
-import inspect
-from lizard import analyze_file, FileAnalyzer, get_extensions
+
+from lizard import analyze_file
 from lizard_languages import SwiftReader
 
 
@@ -17,6 +17,7 @@ class Test_tokenizing_Swift(unittest.TestCase):
 
     def test_dollar_var(self):
         self.check_tokens(['`a`'], '`a`')
+
 
 class Test_parser_for_Swift(unittest.TestCase):
 
@@ -93,28 +94,28 @@ class Test_parser_for_Swift(unittest.TestCase):
                 ''')
         self.assertEqual(0, len(result))
 
-#https://docs.swift.org/swift-book/LanguageGuide/Initialization.html
+    # https://docs.swift.org/swift-book/LanguageGuide/Initialization.html
     def test_init(self):
         result = get_swift_function_list('''
             init() {}
                 ''')
         self.assertEqual("init", result[0].name)
 
-#https://docs.swift.org/swift-book/LanguageGuide/Deinitialization.html
+    # https://docs.swift.org/swift-book/LanguageGuide/Deinitialization.html
     def test_deinit(self):
         result = get_swift_function_list('''
             deinit {}
                 ''')
         self.assertEqual("deinit", result[0].name)
 
-#https://docs.swift.org/swift-book/LanguageGuide/Subscripts.html
+    # https://docs.swift.org/swift-book/LanguageGuide/Subscripts.html
     def test_subscript(self):
         result = get_swift_function_list('''
             override subscript(index: Int) -> Int {}
                 ''')
         self.assertEqual("subscript", result[0].name)
 
-#https://stackoverflow.com/a/30593673
+    # https://stackoverflow.com/a/30593673
     def test_labeled_subscript(self):
         result = get_swift_function_list('''
             extension Collection {
@@ -146,7 +147,7 @@ class Test_parser_for_Swift(unittest.TestCase):
         self.assertEqual("get", result[0].name)
         self.assertEqual("set", result[1].name)
 
-#https://docs.swift.org/swift-book/LanguageGuide/Properties.html#ID259
+    # https://docs.swift.org/swift-book/LanguageGuide/Properties.html#ID259
     def test_explicit_getter_setter(self):
         result = get_swift_function_list('''
             var center: Point {
@@ -180,7 +181,7 @@ class Test_parser_for_Swift(unittest.TestCase):
         self.assertEqual("willSet", result[0].name)
         self.assertEqual("didSet", result[1].name)
 
-#https://docs.swift.org/swift-book/LanguageGuide/Properties.html#ID262
+    # https://docs.swift.org/swift-book/LanguageGuide/Properties.html#ID262
     def test_explicit_willset_didset(self):
         result = get_swift_function_list('''
             class StepCounter {
@@ -234,7 +235,6 @@ class Test_parser_for_Swift(unittest.TestCase):
         ''')
         self.assertEqual(1, result[0].cyclomatic_complexity)
 
-
     def test_for_label(self):
         result = get_swift_function_list('''
             func f0() { something(for: .something) }
@@ -264,4 +264,3 @@ class Test_parser_for_Swift(unittest.TestCase):
             }
         ''')
         self.assertEqual(2, len(result))
-

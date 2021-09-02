@@ -1,11 +1,13 @@
 import unittest
-from lizard import analyze_file, FileAnalyzer, get_extensions
+
+from lizard import analyze_file
 from lizard_languages import LuaReader
 
 
 def get_function_list(source_code):
     return analyze_file.analyze_source_code(
         "a.lua", source_code).function_list
+
 
 class Test_tokenizing_Lua(unittest.TestCase):
 
@@ -14,8 +16,8 @@ class Test_tokenizing_Lua(unittest.TestCase):
         self.assertEqual(expect, tokens)
 
     def test_should_not_confuse_division_as_regx(self):
-        self.check_tokens(['a','/','b',',','a','/','b'], 'a/b,a/b')
-        self.check_tokens(['3453',' ','/','b',',','a','/','b'], '3453 /b,a/b')
+        self.check_tokens(['a', '/', 'b', ',', 'a', '/', 'b'], 'a/b,a/b')
+        self.check_tokens(['3453', ' ', '/', 'b', ',', 'a', '/', 'b'], '3453 /b,a/b')
 
     def test_double_square_brackets_string(self):
         self.check_tokens(['[[this is a string]]'], '[[this is a string]]')
@@ -29,7 +31,6 @@ class Test_tokenizing_Lua(unittest.TestCase):
         line
         comment]]'''
         self.check_tokens([comment, "\n"], comment + "\n")
-
 
 
 class Test_parser_for_Lua(unittest.TestCase):
@@ -54,7 +55,6 @@ class Test_parser_for_Lua(unittest.TestCase):
         self.assertEqual(2, result[0].length)
         self.assertEqual(2, result[0].token_count)
 
-
     def test_comment_is_omitted_in_token_cound(self):
         result = get_function_list('''
             function f
@@ -62,7 +62,6 @@ class Test_parser_for_Lua(unittest.TestCase):
             end
                 ''')
         self.assertEqual(2, result[0].token_count)
-
 
     def test_one_function_loc(self):
         result = get_function_list('''

@@ -3,7 +3,6 @@ This extension dumps all the comments in one file
 """
 from __future__ import print_function, division
 
-
 DEFAULT_NS_THRESHOLD = 3
 
 

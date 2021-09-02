@@ -2,8 +2,10 @@
 Get Duplicated parameter lists
 '''
 from __future__ import print_function
+
 from collections import deque
 from itertools import groupby
+
 from .default_ordered_dict import DefaultOrderedDict
 from .extension_base import ExtensionBase
 
@@ -69,8 +71,8 @@ class InvolvingScope(object):
             if self._full_inclusive_sequences(sequences):
                 continue
             nexts = [(s, n + 1) for s, n in sequences
-                     if n+1 not in self.boundaries
-                     and n+1 not in self.dup_starts]
+                     if n + 1 not in self.boundaries
+                     and n + 1 not in self.dup_starts]
             nexts = sorted(nexts, key=self.keyfunc)
             full_duplicate_stopped = len(nexts) < len(sequences)
             for _, group in groupby(nexts, self.keyfunc):
@@ -115,7 +117,7 @@ class DuplicateFinder(object):
             for dup in scope.same_beginning(
                     same, before_same):
                 token_count = len(dup) * \
-                        (dup[0][1] - dup[0][0] + self.sample_size)
+                              (dup[0][1] - dup[0][0] + self.sample_size)
                 if token_count >= self.min_duplicate_tokens:
                     self.duplicate_token_count += token_count
                     yield dup
@@ -142,7 +144,6 @@ class DuplicateFinder(object):
 
 
 class NestingStackWithUnifiedTokens(object):
-
     SAMPLE_SIZE = 31
     IGNORE_CONSTANT_VALUE_COUNT = 10
 
@@ -183,7 +184,7 @@ class NestingStackWithUnifiedTokens(object):
             return '1'
         if token[0].isalpha():
             if token not in self.token_register:
-                self.token_register[token] = 'v'+str(len(self.current_scope))
+                self.token_register[token] = 'v' + str(len(self.current_scope))
                 self.current_scope.add(token)
             return self.token_register[token]
         return token
@@ -222,7 +223,7 @@ class LizardExtension(ExtensionBase):
 
     def __call__(self, tokens, reader):
         token_unifier = reader.context.decorate_nesting_stack(
-                NestingStackWithUnifiedTokens)
+            NestingStackWithUnifiedTokens)
         for token in tokens:
             token_unifier.enqueue_token(token, reader.context.current_line)
             yield token
@@ -237,10 +238,10 @@ class LizardExtension(ExtensionBase):
     def get_duplicates(self, min_duplicate_tokens=70):
         boundaries = [info[0] for info in self.fileinfos]
         duplicate_finder = DuplicateFinder(
-                self.nodes,
-                boundaries,
-                min_duplicate_tokens=min_duplicate_tokens,
-                sample_size=NestingStackWithUnifiedTokens.SAMPLE_SIZE)
+            self.nodes,
+            boundaries,
+            min_duplicate_tokens=min_duplicate_tokens,
+            sample_size=NestingStackWithUnifiedTokens.SAMPLE_SIZE)
         for start_and_ends in duplicate_finder.find_start_and_ends():
             yield self._create_code_snippets(start_and_ends)
         self.saved_duplicate_rate = duplicate_finder.duplicate_rate()

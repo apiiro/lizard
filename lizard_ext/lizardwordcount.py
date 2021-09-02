@@ -8,11 +8,11 @@ the result to an HTML file and open the browser to show it.
 
 import webbrowser
 from os.path import abspath
+
 from lizard_ext.keywords import IGNORED_WORDS
 
 
 class LizardExtension(object):
-
     HTML_FILENAME = "codecloud.html"
     ignoreList = IGNORED_WORDS
 
@@ -27,7 +27,7 @@ class LizardExtension(object):
         '''
         reader.context.fileinfo.wordCount = result = {}
         for token in tokens:
-            if token not in LizardExtension.ignoreList\
+            if token not in LizardExtension.ignoreList \
                     and token[0] not in ('"', "'", '#'):
                 result[token] = result.get(token, 0) + 1
             yield token
@@ -82,7 +82,7 @@ class LizardExtension(object):
                 html_file.write(
                     ' ' * 40 + '["%s", %d],\n' % (
                         k.replace('"', '\\\"')
-                        .replace("'", "\\\\'").replace("\\", "\\\\"),
+                            .replace("'", "\\\\'").replace("\\", "\\\\"),
                         self.result[k]))
             html_file.write('''
                                     ]);

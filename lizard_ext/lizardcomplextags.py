@@ -16,4 +16,4 @@ class LizardExtension(object):  # pylint: disable=R0903
                 context.current_function.complex_tags = []
             if token in conditions:
                 context.current_function.complex_tags.append(
-                        [token, context.current_line])
+                    [token, context.current_line])

@@ -1,7 +1,7 @@
 '''Open file with automatic encoding'''
+import codecs
 import io
 import os
-import codecs
 
 
 def auto_open(*args, **kwargs):

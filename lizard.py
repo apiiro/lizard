@@ -21,13 +21,14 @@ languages including C/C++ (doesn't require all the header files).
 For more information visit http://www.lizard.ws
 """
 from __future__ import print_function, division
+
 import codecs
-import sys
-import itertools
-import re
-import os
-from fnmatch import fnmatch
 import hashlib
+import itertools
+import os
+import re
+import sys
+from fnmatch import fnmatch
 
 if sys.version[0] == '2':
     from future_builtins import map, filter  # pylint: disable=W0622, F0401
@@ -47,7 +48,7 @@ except ImportError:
     sys.stderr.write("Cannot find the lizard_ext modules.")
 
 DEFAULT_CCN_THRESHOLD, DEFAULT_WHITELIST, \
-    DEFAULT_MAX_FUNC_LENGTH = 15, "whitelizard.txt", 1000
+DEFAULT_MAX_FUNC_LENGTH = 15, "whitelizard.txt", 1000
 
 
 # pylint: disable-msg=too-many-arguments
@@ -250,6 +251,7 @@ class Nesting(object):  # pylint: disable=R0903
     '''
     Nesting represent one level of nesting in any programming language.
     '''
+
     @property
     def name_in_space(self):
         return ''
@@ -605,7 +607,7 @@ def whitelist_filter(warnings, script=None, whitelist=None):
             return open(whitelist, mode='r').read()
         if whitelist != DEFAULT_WHITELIST:
             print("WARNING: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-            print("WARNING: the whitelist \""+whitelist+"\" doesn't exist.")
+            print("WARNING: the whitelist \"" + whitelist + "\" doesn't exist.")
         return ''
 
     if not script:
@@ -640,30 +642,31 @@ class OutputScheme(object):
     def __init__(self, ext):
         self.extensions = ext
         self.items = [
-            {
-                'caption': "  NLOC  ", 'value': "nloc",
-                'avg_caption': ' Avg.NLOC '},
-            {
-                'caption': "  CCN  ", 'value': "cyclomatic_complexity",
-                'avg_caption': ' AvgCCN '},
-            {
-                'caption': " token ", 'value': "token_count",
-                'avg_caption': ' Avg.token '},
-            {'caption': " PARAM ", 'value': "parameter_count"},
-            {'caption': " length ", 'value': "length"},
-            ] + [
-            {
-                'caption': caption,
-                'value': part,
-                'avg_caption': average
-            }
-            for caption, part, average in self._ext_member_info()]
+                         {
+                             'caption': "  NLOC  ", 'value': "nloc",
+                             'avg_caption': ' Avg.NLOC '},
+                         {
+                             'caption': "  CCN  ", 'value': "cyclomatic_complexity",
+                             'avg_caption': ' AvgCCN '},
+                         {
+                             'caption': " token ", 'value': "token_count",
+                             'avg_caption': ' Avg.token '},
+                         {'caption': " PARAM ", 'value': "parameter_count"},
+                         {'caption': " length ", 'value': "length"},
+                     ] + [
+                         {
+                             'caption': caption,
+                             'value': part,
+                             'avg_caption': average
+                         }
+                         for caption, part, average in self._ext_member_info()]
         self.items.append({'caption': " location  ", 'value': 'location'})
 
     def patch_for_extensions(self):
         def _patch(name):
             setattr(FileInformation, "average_" + name,
                     property(lambda self: self.functions_average(name)))
+
         for item in self.items:
             if 'avg_caption' in item:
                 _patch(item["value"])
@@ -707,26 +710,26 @@ class OutputScheme(object):
     def average_formatter(self):
         return "".join([
             "{{module.average_{ext[value]}:{size}.1f}}"
-            .format(ext=e, size=len(e['avg_caption']))
+                .format(ext=e, size=len(e['avg_caption']))
             for e in self.items
             if e.get("avg_caption", None)])
 
     def clang_warning_format(self):
         return (
-            "{f.filename}:{f.start_line}: warning: {f.name} has " +
-            ", ".join([
-                "{{f.{ext[value]}}} {caption}"
-                .format(ext=e, caption=e['caption'].strip())
-                for e in self.items[:-1]
+                "{f.filename}:{f.start_line}: warning: {f.name} has " +
+                ", ".join([
+                    "{{f.{ext[value]}}} {caption}"
+                        .format(ext=e, caption=e['caption'].strip())
+                    for e in self.items[:-1]
                 ]))
 
     def msvs_warning_format(self):
         return (
-            "{f.filename}({f.start_line}): warning: {f.name} has " +
-            ", ".join([
-                "{{f.{ext[value]}}} {caption}"
-                .format(ext=e, caption=e['caption'].strip())
-                for e in self.items[:-1]
+                "{f.filename}({f.start_line}): warning: {f.name} has " +
+                ", ".join([
+                    "{{f.{ext[value]}}} {caption}"
+                        .format(ext=e, caption=e['caption'].strip())
+                    for e in self.items[:-1]
                 ]))
 
 
@@ -759,7 +762,7 @@ class AllResult(object):
     def __init__(self, result):
         self.result = list(file_info for file_info in result if file_info)
         self.all_fun = list(itertools.chain(*(file_info.function_list
-                                            for file_info in self.result)))
+                                              for file_info in self.result)))
 
     def function_count(self):
         return len(self.all_fun) or 1
@@ -769,26 +772,26 @@ class AllResult(object):
 
     def as_fileinfo(self):
         return FileInformation(
-                    "",
-                    sum([f.nloc for f in self.result]),
-                    self.all_fun)
+            "",
+            sum([f.nloc for f in self.result]),
+            self.all_fun)
 
 
 def print_total(warning_count, warning_nloc, all_result, scheme):
     print("=" * 90)
     print("Total nloc  " + scheme.average_captions() + "  Fun Cnt  Warning"
-          " cnt   Fun Rt   nloc Rt")
+                                                       " cnt   Fun Rt   nloc Rt")
     print("-" * 90)
     print((
-        "{module.nloc:10d}" +
-        scheme.average_formatter() +
-        "{function_count:9d}{warning_count:13d}" +
-        "{function_rate:10.2f}{nloc_rate:8.2f}").format(
-                  module=all_result.as_fileinfo(),
-                  function_count=all_result.function_count(),
-                  warning_count=warning_count,
-                  function_rate=(warning_count/all_result.function_count()),
-                  nloc_rate=(warning_nloc/all_result.nloc_in_functions())))
+            "{module.nloc:10d}" +
+            scheme.average_formatter() +
+            "{function_count:9d}{warning_count:13d}" +
+            "{function_rate:10.2f}{nloc_rate:8.2f}").format(
+        module=all_result.as_fileinfo(),
+        function_count=all_result.function_count(),
+        warning_count=warning_count,
+        function_rate=(warning_count / all_result.function_count()),
+        nloc_rate=(warning_nloc / all_result.nloc_in_functions())))
 
 
 def print_and_save_modules(all_fileinfos, scheme):
@@ -808,10 +811,10 @@ def print_and_save_modules(all_fileinfos, scheme):
     print("--------------------------------------------------------------")
     for module_info in saved_fileinfos:
         print((
-            "{module.nloc:7d}" +
-            scheme.average_formatter() +
-            "{function_count:10d}" +
-            "     {module.filename}").format(
+                "{module.nloc:7d}" +
+                scheme.average_formatter() +
+                "{function_count:10d}" +
+                "     {module.filename}").format(
             module=module_info,
             function_count=len(module_info.function_list)))
     return saved_fileinfos
@@ -899,7 +902,7 @@ def get_all_source_files(paths, exclude_patterns, lans):
 
     def _validate_file(pathname):
         return (
-            pathname in paths or (
+                pathname in paths or (
                 get_reader_for(pathname) and
                 _support(get_reader_for(pathname)) and
                 all(not fnmatch(pathname, p) for p in exclude_patterns) and
@@ -934,6 +937,7 @@ def parse_args(argv):
             if hasattr(ext, "set_args"):
                 ext.set_args(parser_to_extend)  # pylint: disable=E1101
         return parser_to_extend
+
     parser = extend_parser(arg_parser(argv[0]))
     opt = parser.parse_args(args=argv[1:])
     opt.extensions = get_extensions(opt.extensions)
@@ -994,9 +998,9 @@ def get_extensions(extension_names):
     def expand_extensions(existing):
         for name in extension_names:
             ext = (
-                    im('lizard_ext.lizard' + name.lower())
+                im('lizard_ext.lizard' + name.lower())
                     .LizardExtension()
-                    if isinstance(name, str) else name)
+                if isinstance(name, str) else name)
             existing.insert(
                 len(existing) if not hasattr(ext, "ordering_index") else
                 ext.ordering_index,
@@ -1004,12 +1008,12 @@ def get_extensions(extension_names):
         return existing
 
     return expand_extensions([
-            preprocessing,
-            comment_counter,
-            line_counter,
-            token_counter,
-            condition_counter,
-        ])
+        preprocessing,
+        comment_counter,
+        line_counter,
+        token_counter,
+        condition_counter,
+    ])
 
 
 analyze_file = FileAnalyzer(get_extensions([]))  # pylint: disable=C0103

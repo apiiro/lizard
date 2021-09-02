@@ -60,6 +60,7 @@ class RubylikeStateMachine(CodeStateMachine):
         def callback():
             self.context.end_of_function()
             self.next(self._state_global)
+
         if token == ".":
             self.context.add_to_function_name(token)
             self.next(self._def_class_method)

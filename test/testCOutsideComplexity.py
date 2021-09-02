@@ -1,10 +1,12 @@
 import unittest
-from .testHelpers import get_cpp_function_list_with_extension
+
 from lizard_ext.lizardoutside import LizardExtension as CountOutsideComplexity
+from .testHelpers import get_cpp_function_list_with_extension
 
 
 def analyze_with_outside_extension(code):
     return get_cpp_function_list_with_extension(code, CountOutsideComplexity())
+
 
 class Test_complexity_in_c_marco(unittest.TestCase):
 

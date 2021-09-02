@@ -2,8 +2,8 @@
 Language parser for Apple Swift
 '''
 
-from .code_reader import CodeReader, CodeStateMachine
 from .clike import CCppCommentsMixin
+from .code_reader import CodeReader, CodeStateMachine
 from .golike import GoLikeStates
 
 
@@ -39,6 +39,7 @@ class SwiftReader(CodeReader, CCppCommentsMixin):
                     for j, repl in enumerate(replace):
                         tokens[i + j] = repl
             return tokens
+
         for k in (k for k in self.conditions if k.isalpha()):
             tokens = replace_label(tokens, ["(", k, ":"], ["(", "_" + k, ":"])
             tokens = replace_label(tokens, [",", k, ":"], [",", "_" + k, ":"])

@@ -1,10 +1,12 @@
 import unittest
-from lizard import  analyze_file, FileAnalyzer, get_extensions
+
+from lizard import analyze_file
 from lizard_languages import JavaScriptReader
 
 
 def get_ts_function_list(source_code):
     return analyze_file.analyze_source_code("a.ts", source_code).function_list
+
 
 class Test_tokenizing_TypeScript(unittest.TestCase):
 
@@ -14,6 +16,7 @@ class Test_tokenizing_TypeScript(unittest.TestCase):
 
     def test_simple(self):
         self.check_tokens(['abc?'], 'abc?')
+
 
 class Test_parser_for_TypeScript(unittest.TestCase):
 
@@ -55,4 +58,3 @@ class Test_parser_for_TypeScript(unittest.TestCase):
         """)
         self.assertEqual(1, len(functions))
         self.assertEqual(2, functions[0].cyclomatic_complexity)
-

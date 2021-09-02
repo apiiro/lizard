@@ -69,6 +69,7 @@ class JavaScriptStyleLanguageStates(CodeStateMachine):  # pylint: disable=R0903
     def _expecting_statement_or_block(self, token):
         def callback():
             self.next(self._state_global)
+
         if token == "{":
             self.sub_state(
                 JavaScriptStyleLanguageStates(self.context),

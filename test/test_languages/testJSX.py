@@ -1,10 +1,12 @@
 import unittest
-from lizard import  analyze_file, FileAnalyzer, get_extensions
+
+from lizard import analyze_file
 from lizard_languages import JavaScriptReader
 
 
 def get_js_function_list(source_code):
     return analyze_file.analyze_source_code("a.jsx", source_code).function_list
+
 
 class Test_tokenizing_JSX(unittest.TestCase):
 
@@ -59,4 +61,3 @@ class Test_parser_for_JavaScript_X(unittest.TestCase):
 
         functions = get_js_function_list(code)
         self.assertEqual("(anonymous)", functions[0].name)
-

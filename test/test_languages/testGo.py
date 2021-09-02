@@ -1,6 +1,6 @@
 import unittest
-import inspect
-from lizard import analyze_file, FileAnalyzer, get_extensions
+
+from lizard import analyze_file
 
 
 def get_go_function_list(source_code):
@@ -88,4 +88,3 @@ class Test_parser_for_Go(unittest.TestCase):
             class c { }
                 ''')
         self.assertEqual(0, len(result))
-

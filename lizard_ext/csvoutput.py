@@ -46,7 +46,7 @@ def csv_output(result, options):
                 if source_function:
                     extension_string = ''
                     for variable in extension_variables:
-                        extension_string = '{},{}'.\
+                        extension_string = '{},{}'. \
                             format(extension_string,
                                    source_function.__getattribute__(variable))
                     print('{},{},{},{},{},"{}","{}","{}","{}",{},{}{}'.format(

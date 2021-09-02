@@ -1,19 +1,18 @@
 ''' Language parser for Python '''
 
-from .code_reader import CodeStateMachine
 from .clike import CLikeReader, CLikeStates, CLikeNestingStackStates
+from .code_reader import CodeStateMachine
 
 
 class ObjCReader(CLikeReader):
-
     ext = ['m', 'mm']
     language_names = ['objectivec', 'objective-c', 'objc']
 
     def __init__(self, context):
         super(ObjCReader, self).__init__(context)
         self.parallel_states = [
-                ObjCStates(context),
-                CLikeNestingStackStates(context)]
+            ObjCStates(context),
+            CLikeNestingStackStates(context)]
 
     def fake_and_useless(self):
         pass

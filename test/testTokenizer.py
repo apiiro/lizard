@@ -1,5 +1,8 @@
 import unittest
+
 from lizard_languages.code_reader import CodeReader
+
+
 def generate_tokens(source):
     return [t for t in CodeReader.generate_tokens(source)]
 
@@ -56,9 +59,9 @@ class Test_generate_token(unittest.TestCase):
 class Test_generate_token_for_macros(unittest.TestCase):
 
     def test_define(self):
-        define =  '''#define xx()\
+        define = '''#define xx()\
                        abc'''
-        tokens = generate_tokens(define+'''
+        tokens = generate_tokens(define + '''
                     int''')
         self.assertEqual([define, '\n', ' ' * 20, 'int'], tokens)
 
@@ -94,6 +97,7 @@ class Test_generate_token_for_macros(unittest.TestCase):
         comment = '''#define A \\\n/*\\\n*/'''
         tokens = generate_tokens(comment)
         self.assertEqual(1, len(tokens))
+
 
 class Test_generate_token_for_comments(unittest.TestCase):
 

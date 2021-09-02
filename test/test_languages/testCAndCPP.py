@@ -1,12 +1,15 @@
 import unittest
+
 from lizard_languages import CLikeReader
-from ..testHelpers import get_cpp_fileinfo, get_cpp_function_list
+from ..testHelpers import get_cpp_function_list
+
 
 class Test_C_Token_extension(unittest.TestCase):
 
     def test_connecting_macro(self):
-        extended = CLikeReader(None).preprocess(("a##b c", ))
-        #tbd
+        extended = CLikeReader(None).preprocess(("a##b c",))
+        # tbd
+
 
 class Test_c_cpp_lizard(unittest.TestCase):
 
@@ -50,7 +53,7 @@ class Test_c_cpp_lizard(unittest.TestCase):
         self.assertEqual(1, len(result))
 
     def test_not_old_style_c_function(self):
-        result = get_cpp_function_list("m()"*1500+ "a(){}")
+        result = get_cpp_function_list("m()" * 1500 + "a(){}")
         self.assertEqual(1, len(result))
 
     def test_complicated_c_function(self):
@@ -148,7 +151,7 @@ class Test_c_cpp_lizard(unittest.TestCase):
         self.assertEqual(1, len(result))
         self.assertEqual('fun', result[0].name)
         result = get_cpp_function_list(
-                "int fun() noexcept(noexcept(foo()) && noexcept(Bar())) {}")
+            "int fun() noexcept(noexcept(foo()) && noexcept(Bar())) {}")
         self.assertEqual(1, len(result))
         self.assertEqual('fun', result[0].name)
 
@@ -218,7 +221,7 @@ class Test_c_cpp_lizard(unittest.TestCase):
 
     def test_template_class_partial_specialization(self):
         result = get_cpp_function_list(
-                "template<typename T> class c<int,T> {};")
+            "template<typename T> class c<int,T> {};")
         self.assertEqual(0, len(result))
         result = get_cpp_function_list("template<class T> class c<int,T> {};")
         self.assertEqual(0, len(result))
@@ -358,14 +361,14 @@ class Test_c_cpp_lizard(unittest.TestCase):
 
     def test_namespace_alias(self):
         result = get_cpp_function_list(
-                "namespace p;"
-                "namespace real { bool foo() {} }")
+            "namespace p;"
+            "namespace real { bool foo() {} }")
         self.assertEqual(1, len(result))
         self.assertEqual("real::foo", result[0].name)
 
     def test_nested_unnamed_namespace(self):
         result = get_cpp_function_list(
-                "namespace real { namespace { bool foo() {} } }")
+            "namespace real { namespace { bool foo() {} } }")
         self.assertEqual(1, len(result))
         self.assertEqual("real::foo", result[0].name)
 
@@ -479,6 +482,7 @@ class Test_c_cpp_lizard(unittest.TestCase):
         result = get_cpp_function_list("union A { void foo() {} };")
         self.assertEqual(1, len(result))
         self.assertEqual("A::foo", result[0].name)
+
 
 class Test_cpp11_Attributes(unittest.TestCase):
     """C++11 extendable attributes can appear pretty much anywhere."""

@@ -10,9 +10,9 @@ DEFAULT_ND_THRESHOLD = 7
 class LizardExtension(object):  # pylint: disable=R0903
 
     FUNCTION_INFO = {
-            "max_nesting_depth": {
-                "caption": "  ND  ",
-                "average_caption": " Avg.ND "}}
+        "max_nesting_depth": {
+            "caption": "  ND  ",
+            "average_caption": " Avg.ND "}}
 
     @staticmethod
     def set_args(parser):

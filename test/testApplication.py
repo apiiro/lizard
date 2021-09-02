@@ -1,8 +1,10 @@
-import unittest
-from mock import patch
-import lizard
 import os
 import sys
+import unittest
+
+from mock import patch
+
+import lizard
 
 
 @patch('lizard.md5_hash_file')
@@ -12,7 +14,6 @@ import sys
 class TestApplication(unittest.TestCase):
 
     def testEmptyResult(self, print_result, os_walk, mock_open, _):
-
         def check_empty_result(result, options, scheme, _):
             self.assertEqual([], list(result))
             return 0
@@ -27,6 +28,7 @@ class TestApplication(unittest.TestCase):
             self.assertEqual(1, len(fileInfos))
             self.assertEqual('foo', fileInfos[0].function_list[0].name)
             return 0
+
         os_walk.return_value = [('.', [], ['a.cpp'])]
         mock_open.return_value = "void foo(){}"
         print_result.side_effect = check_result
@@ -60,6 +62,7 @@ class IntegrationTests(unittest.TestCase):
         def store_result(result, options, scheme, _):
             self.fileInfos = list(result)
             return self.returned_warning_count
+
         mock_open.return_value = src
         print_result.side_effect = store_result
         lizard.main(argv)

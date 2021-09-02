@@ -1,15 +1,17 @@
 import unittest
+
 from mock import patch
+
 from lizard_ext.lizardwordcount import LizardExtension
 
 
 class FakeReader(object):
-
-    class FI(object) : pass
+    class FI(object): pass
 
     def __init__(self):
         self.fileinfo = self.FI()
         self.context = self
+
     def get_word_map(self):
         return self.fileinfo.wordCount
 
@@ -54,13 +56,14 @@ class TestWordCountPlugin(unittest.TestCase):
         list(self.ext.cross_file_process([self.reader.fileinfo, self.reader.fileinfo]))
         self.assertEqual(2, self.ext.result['a'])
 
+
 class TestWordCountOutput(unittest.TestCase):
 
     def setUp(self):
         self.buf = ''
 
     def write_to_buffer(self, txt):
-            self.buf += txt
+        self.buf += txt
 
     @patch('webbrowser.open')
     @patch('lizard_ext.lizardwordcount.open', create=True)
@@ -68,7 +71,7 @@ class TestWordCountOutput(unittest.TestCase):
         buf = ""
         mock_open.return_value.__enter__.return_value.write.side_effect = self.write_to_buffer
         ext = LizardExtension()
-        ext.result = {'a':123}
+        ext.result = {'a': 123}
         ext.print_result()
         mock_open.assert_called_once_with('codecloud.html', 'w')
         self.assertIn('<html>', self.buf)
@@ -79,6 +82,6 @@ class TestWordCountOutput(unittest.TestCase):
     def test_should_open_the_browser(self, mock_open, browser_open):
         import os
         ext = LizardExtension()
-        ext.result = {'a':123}
+        ext.result = {'a': 123}
         ext.print_result()
         browser_open.assert_called_with('file://' + os.path.abspath('codecloud.html'));

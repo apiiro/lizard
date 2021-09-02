@@ -1,8 +1,9 @@
-import unittest
 import inspect
-from ..testHelpers import get_python_function_list_with_extension
+import unittest
+
 from lizard_ext.lizardnd import LizardExtension as NestDepth
 from lizard_languages.python import PythonReader
+from ..testHelpers import get_python_function_list_with_extension
 
 
 def get_python_function_list(source_code):
@@ -70,6 +71,7 @@ class Test_parser_for_Python(unittest.TestCase):
             def simple_function():
                 if IamOnEarth:
                     return toMars()
+
         functions = get_python_function_list(inspect.getsource(namespace1))
         self.assertEqual(1, len(functions))
         self.assertEqual("simple_function", functions[0].name)
@@ -114,6 +116,7 @@ class Test_parser_for_Python(unittest.TestCase):
         class namespace2:
             def function_with_2_parameters(a, b):
                 pass
+
         functions = get_python_function_list(inspect.getsource(namespace2))
         self.assertEqual(2, functions[0].parameter_count)
 
@@ -121,6 +124,7 @@ class Test_parser_for_Python(unittest.TestCase):
         class namespace_df:
             def function_with_2_parameters_and_default_value(a, b=None):
                 pass
+
         functions = get_python_function_list(inspect.getsource(namespace_df))
         self.assertEqual(2, functions[0].parameter_count)
         self.assertEqual(['a', 'b'], functions[0].parameters)
@@ -131,6 +135,7 @@ class Test_parser_for_Python(unittest.TestCase):
                 pass
 
             blah = 42
+
         functions = get_python_function_list(inspect.getsource(namespace3))
         self.assertEqual(1, len(functions))
         self.assertEqual("simple_function", functions[0].name)
@@ -154,8 +159,10 @@ class Test_parser_for_Python(unittest.TestCase):
         class namespace4:
             def function1(a, b):
                 pass
+
             def function2(a, b):
                 pass
+
         functions = get_python_function_list(inspect.getsource(namespace4))
         self.assertEqual(2, len(functions))
 
@@ -164,7 +171,9 @@ class Test_parser_for_Python(unittest.TestCase):
             def function1(a, b):
                 def function2(a, b):
                     pass
+
                 a = 1 if b == 2 else 3
+
         functions = get_python_function_list(inspect.getsource(namespace5))
         self.assertEqual(2, len(functions))
         self.assertEqual("function1.function2", functions[0].name)
@@ -180,6 +189,7 @@ class Test_parser_for_Python(unittest.TestCase):
             def function1(a, b):
                 def function2(a, b):
                     pass
+
         functions = get_python_function_list(inspect.getsource(namespace6))
         self.assertEqual(2, len(functions))
         self.assertEqual("function1.function2", functions[0].name)
@@ -192,8 +202,10 @@ class Test_parser_for_Python(unittest.TestCase):
             def function1(a, b):
                 def function2(a, b):
                     pass
+
             def function3():
                 pass
+
         functions = get_python_function_list(inspect.getsource(namespace7))
         self.assertEqual(3, len(functions))
         self.assertEqual("function1.function2", functions[0].name)
@@ -203,8 +215,10 @@ class Test_parser_for_Python(unittest.TestCase):
 
     def xtest_one_line_functions(self):
         class namespace8:
-            def a( ):pass
-            def b( ):pass
+            def a(): pass
+
+            def b(): pass
+
         functions = get_python_function_list(inspect.getsource(namespace8))
         self.assertEqual("a", functions[0].name)
         self.assertEqual("b", functions[1].name)
@@ -215,6 +229,7 @@ class Test_parser_for_Python(unittest.TestCase):
                 if IamOnEarth:
                     if IamOnShip:
                         return toMars()
+
         functions = get_python_function_list(inspect.getsource(namespace9))
         self.assertEqual(1, len(functions))
         self.assertEqual("function1", functions[0].name)
@@ -230,6 +245,7 @@ class Test_parser_for_Python(unittest.TestCase):
                         return toMars()
                 elif IamOnMoon:
                     return backEarth()
+
         functions = get_python_function_list(inspect.getsource(namespace10))
         self.assertEqual(1, len(functions))
         self.assertEqual("function1", functions[0].name)
@@ -239,47 +255,46 @@ class Test_parser_for_Python(unittest.TestCase):
 
     def test_comment_is_not_counted_in_nloc(self):
         def function_with_comments():
-
             # comment
             pass
+
         functions = get_python_function_list(inspect.getsource(function_with_comments))
         self.assertEqual(2, functions[0].nloc)
 
     def test_odd_blank_line(self):
-        code =  "class c:\n" + \
-                "    def f():\n" +\
-                "  \n" +\
-                "         pass\n"
+        code = "class c:\n" + \
+               "    def f():\n" + \
+               "  \n" + \
+               "         pass\n"
         functions = get_python_function_list(code)
         self.assertEqual(4, functions[0].end_line)
 
     def test_odd_line_with_comment(self):
-        code =  "class c:\n" + \
-                "    def f():\n" +\
-                "  #\n" +\
-                "         pass\n"
+        code = "class c:\n" + \
+               "    def f():\n" + \
+               "  #\n" + \
+               "         pass\n"
         functions = get_python_function_list(code)
         self.assertEqual(4, functions[0].end_line)
 
     def test_tab_is_same_as_8_spaces(self):
-        code =  ' ' * 7 + "def a():\n" + \
-                '\t'    +  "pass\n"
+        code = ' ' * 7 + "def a():\n" + \
+               '\t' + "pass\n"
         functions = get_python_function_list(code)
         self.assertEqual(2, functions[0].end_line)
 
     def xtest_if_elif_and_or_for_while_except_finally(self):
-        code =  'def a():\n' + \
-                '    if elif and or for while except finally\n'
+        code = 'def a():\n' + \
+               '    if elif and or for while except finally\n'
         functions = get_python_function_list(code)
         self.assertEqual(9, functions[0].cyclomatic_complexity)
         self.assertEqual(8, functions[0].max_nesting_depth)
 
-
     def test_block_string_is_one_token(self):
-        code =  'def a():\n' + \
-                "    a = '''\n" +\
-                "a b c d e f g h i'''\n"+\
-                "    return a\n"
+        code = 'def a():\n' + \
+               "    a = '''\n" + \
+               "a b c d e f g h i'''\n" + \
+               "    return a\n"
         functions = get_python_function_list(code)
         self.assertEqual(9, functions[0].token_count)
         self.assertEqual(4, functions[0].end_line)
@@ -300,7 +315,7 @@ class Test_parser_for_Python(unittest.TestCase):
     def test_docstring_is_not_counted_in_nloc(self):
         self.check_function_info("def f():\n '''block\n '''\n pass", 6, 2, 4)
 
-    #global complexity
+    # global complexity
 
 
 def top_level_function_for_test():

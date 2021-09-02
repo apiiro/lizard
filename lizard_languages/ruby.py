@@ -2,8 +2,8 @@
 Language parser for Ruby
 '''
 
-from .rubylike import RubylikeReader
 from .js_style_regex_expression import js_style_regex_expression
+from .rubylike import RubylikeReader
 from .script_language import ScriptLanguageMixIn
 
 
@@ -38,6 +38,7 @@ class RubyReader(RubylikeReader):
                 r"|\.+" +
                 r"|:?\@{0,2}\w+\??\!?" +
                 _, matcher)
+
         matcher = MyToken
         bracket_stack = []
         source = source_code
@@ -48,7 +49,7 @@ class RubyReader(RubylikeReader):
                 elif token == "}":
                     if bracket_stack:
                         if bracket_stack.pop() == '#{':
-                            source = '"'+source[token.begin + 1:]
+                            source = '"' + source[token.begin + 1:]
                             yield token
                             break
                 elif token.startswith('"'):
@@ -57,7 +58,7 @@ class RubyReader(RubylikeReader):
                         yield first + '"'
                         yield '${'  # because #will be regarded as comments
                         bracket_stack.append(sep)
-                        source = source[token.begin + token.find(sep)+2:]
+                        source = source[token.begin + token.find(sep) + 2:]
                         break
                 yield token
             else:

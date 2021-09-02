@@ -14,7 +14,6 @@ from lizard_ext.lizardnd import patch_append_method
 from lizard_languages.code_reader import CodeStateMachine
 from .extension_base import ExtensionBase
 
-
 DEFAULT_NS_THRESHOLD = 3
 
 

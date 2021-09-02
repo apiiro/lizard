@@ -1,7 +1,8 @@
+import unittest
 from os.path import join
 from shutil import rmtree
 from tempfile import mkdtemp
-import unittest
+
 from lizard import html_output, print_xml, parse_args, main
 
 
