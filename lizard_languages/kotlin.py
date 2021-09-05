@@ -5,9 +5,10 @@ Language parser for Apple Swift
 from .clike import CCppCommentsMixin
 from .code_reader import CodeReader
 from .golike import GoLikeStates
+from .swift import SwiftReplaceLabel
 
 
-class KotlinReader(CodeReader, CCppCommentsMixin):
+class KotlinReader(CodeReader, CCppCommentsMixin, SwiftReplaceLabel):
     # pylint: disable=R0903
 
     ext = ['kt', 'kts']
@@ -31,20 +32,6 @@ class KotlinReader(CodeReader, CCppCommentsMixin):
             addition
         )
 
-    def preprocess(self, tokens):
-
-        def replace_label(tokens, target, replace):
-            for i in range(0, len(tokens) - len(target)):
-                if tokens[i:i + len(target)] == target:
-                    for j, repl in enumerate(replace):
-                        tokens[i + j] = repl
-            return tokens
-
-        for k in (k for k in self.conditions if k.isalpha()):
-            tokens = replace_label(tokens, ["(", k, ":"], ["(", "_" + k, ":"])
-            tokens = replace_label(tokens, [",", k, ":"], [",", "_" + k, ":"])
-        return tokens
-
 
 class KotlinStates(GoLikeStates):  # pylint: disable=R0903
 
@@ -64,9 +51,3 @@ class KotlinStates(GoLikeStates):  # pylint: disable=R0903
 
     def _expect_declaration_name(self, token):
         self._state = self._state_global
-
-    # def _expect_function_impl(self, token):
-    #    if token == '{':
-    #        self.next(self._function_impl, token)
-    #    elif token == '=':
-    #        self.next(self._function_impl, token)
