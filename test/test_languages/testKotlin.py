@@ -151,13 +151,15 @@ class Test_parser_for_Kotlin(unittest.TestCase):
 
     def test_when_cases(self):
         result = get_kotlin_function_list('''
-                when (x) {
-                    0, 1 -> print("x == 0 or x == 1")
-                    else -> print("otherwise")
+                fun cases(x: Int) {
+                    when (x) {
+                        0, 1 -> print("x == 0 or x == 1")
+                        else -> print("otherwise")
+                    }
                 }
                 ''')
-        self.assertEqual("get", result[0].name)
-        self.assertEqual("set", result[1].name)
+        self.assertEqual("cases", result[0].name)
+        self.assertEqual(2, result[0].cyclomatic_complexity)
 
     def test_keyword_declarations(self):
         result = get_kotlin_function_list('''
@@ -188,7 +190,7 @@ class Test_parser_for_Kotlin(unittest.TestCase):
             }
         ''')
         self.assertEqual("f", result[0].name)
-        self.assertEqual(3, result[0].cyclomatic_complexity)
+        self.assertEqual(2, result[0].cyclomatic_complexity)
 
     def test_for_label(self):
         result = get_kotlin_function_list('''
