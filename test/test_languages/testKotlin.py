@@ -63,7 +63,7 @@ class Test_parser_for_Kotlin(unittest.TestCase):
             val sayGoodbye: () -> String = {"bye"}
                 ''')
         self.assertEqual(1, len(result))
-        self.assertEqual("sayGoodbye", result[0].name)
+        self.assertEqual("(anonymous)", result[0].name)
 
     def test_one_function_with_complexity(self):
         result = get_kotlin_function_list('''
@@ -94,7 +94,7 @@ class Test_parser_for_Kotlin(unittest.TestCase):
 
     def test_interface_with_vars(self):
         result = get_kotlin_function_list('''
-            protocol p {
+            interface p {
                 fun f1(): String
                 fun f2()
                 val p1: String
@@ -104,6 +104,17 @@ class Test_parser_for_Kotlin(unittest.TestCase):
             class c { }
                 ''')
         self.assertEqual(0, len(result))
+
+    def test_getter(self):
+        result = get_kotlin_function_list('''
+            class Time
+            {
+                var seconds: Double = 17.0
+                var minutes: Double
+                    get() = seconds / 60
+            }
+                ''')
+        self.assertEqual("get", result[0].name)
 
     def test_getter_setter(self):
         result = get_kotlin_function_list('''
@@ -117,8 +128,8 @@ class Test_parser_for_Kotlin(unittest.TestCase):
                     }
             }
                 ''')
-        self.assertEqual("get", result[0].name)
-        self.assertEqual("set", result[1].name)
+        self.assertEqual("get", result[1].name)
+        self.assertEqual("set", result[0].name)
 
     # https://docs.kotlin.org/kotlin-book/LanguageGuide/Properties.html#ID259
     def test_explicit_getter_setter(self):
@@ -135,8 +146,8 @@ class Test_parser_for_Kotlin(unittest.TestCase):
                 }
             }
                 ''')
-        self.assertEqual("get", result[0].name)
-        self.assertEqual("set", result[1].name)
+        self.assertEqual("set", result[0].name)
+        self.assertEqual("get", result[1].name)
 
     def test_when_cases(self):
         result = get_kotlin_function_list('''
@@ -156,7 +167,7 @@ class Test_parser_for_Kotlin(unittest.TestCase):
                 fun `get`() {}
             }
                 ''')
-        self.assertEqual("`default`", result[0].name)
+        self.assertEqual("`get`", result[0].name)
 
     def test_generic_function(self):
         result = get_kotlin_function_list('''
@@ -176,6 +187,7 @@ class Test_parser_for_Kotlin(unittest.TestCase):
                 val keep = filteredList?.contains(ingredient) ?: true
             }
         ''')
+        self.assertEqual("f", result[0].name)
         self.assertEqual(3, result[0].cyclomatic_complexity)
 
     def test_for_label(self):
@@ -206,4 +218,7 @@ class Test_parser_for_Kotlin(unittest.TestCase):
             return a() + b()
         }
         ''')
-        self.assertEqual(2, len(result))
+        self.assertEqual(3, len(result))
+        self.assertEqual("a", result[0].name)
+        self.assertEqual("b", result[1].name)
+        self.assertEqual("bar", result[2].name)
