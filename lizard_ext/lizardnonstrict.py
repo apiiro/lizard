@@ -9,5 +9,5 @@ class LizardExtension(object):  # pylint: disable=R0903
 
     # pylint: disable=W0221
     def __call__(self, tokens, reader):
-        reader.conditions -= set(['&&', '||', 'and', 'or'])
+        reader.conditions -= {'&&', '||', 'and', 'or'}
         return tokens

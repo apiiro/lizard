@@ -74,10 +74,12 @@ class LizardExtension(ExtensionBase):
             other_func.fan_out += len(list(intersect.elements()))
 
     def _add_to_general_fan_out(self):
-        structures = set(['if', 'else', 'elif', 'for', 'foreach', 'while',
-                          'do', 'try', 'catch', 'switch', 'finally',
-                          'except', 'with'])
-        punctuations = set(['(', ')', '{', '}'])
+        structures = {
+            'if', 'else', 'elif', 'for', 'foreach', 'while',
+            'do', 'try', 'catch', 'switch', 'finally',
+            'except', 'with'
+        }
+        punctuations = {'(', ')', '{', '}'}
         for other_func in self.all_methods.values():
             bracket_indexes = get_all_indices('(', other_func.tokens)
             for idx in bracket_indexes[1:]:

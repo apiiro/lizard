@@ -21,9 +21,10 @@ class FortranReader(CodeReader, FortranCommentsMixin):
 
     ext = ['f70', 'f90', 'f95', 'f03', 'f08', 'f', 'for', 'ftn', 'fpp']
     language_names = ['fortran']
-    _conditions = set((
+    _conditions = {
         'IF', 'DO', '.AND.', '.OR.', 'CASE',
-        'if', 'do', '.and.', '.or.', 'case'))
+        'if', 'do', '.and.', '.or.', 'case'
+    }
     _blocks = ['PROGRAM', 'MODULE', 'SUBROUTINE', 'FUNCTION', 'TYPE', 'INTERFACE', 'BLOCK', 'IF', 'DO', 'FORALL', 'WHERE', 'SELECT', 'ASSOCIATE']
 
     def __init__(self, context):

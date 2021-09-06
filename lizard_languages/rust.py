@@ -12,8 +12,10 @@ class RustReader(CodeReader, CCppCommentsMixin):
 
     ext = ['rs']
     language_names = ['rust']
-    _conditions = set(['if', 'for', 'while', '&&', '||', '?', 'catch',
-                       'case', 'match', 'where'])
+    _conditions = {
+        'if', 'for', 'while', '&&', '||', '?', 'catch',
+        'case', 'match', 'where'
+    }
 
     def __init__(self, context):
         super(RustReader, self).__init__(context)

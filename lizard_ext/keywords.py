@@ -1,6 +1,6 @@
 '''docstring'''
 
-IGNORED_WORDS = set((
+IGNORED_WORDS = {
     '(',
     ')',
     '{',
@@ -77,4 +77,4 @@ IGNORED_WORDS = set((
     'require',
     '@',
     'end'
-))
+}

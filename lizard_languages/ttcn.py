@@ -11,9 +11,11 @@ class TTCNReader(CLikeReader):  # pylint: disable=R0903
     ext = ['ttcn', 'ttcnpp']
     language_names = ['ttcn', 'ttcn3']
 
-    _conditions = set(['if', 'else', 'for', 'while',
-                       'altstep', 'case', 'goto', 'alt',
-                       'interleave', 'and', 'or', 'xor'])
+    _conditions = {
+        'if', 'else', 'for', 'while',
+        'altstep', 'case', 'goto', 'alt',
+        'interleave', 'and', 'or', 'xor'
+    }
 
     def __init__(self, context):
         super(TTCNReader, self).__init__(context)

@@ -83,7 +83,7 @@ class SDLReader(CodeReader, CCppCommentsMixin):
         if condition:
             return self.context.CONDITION()
 
-    _conditions = set(['WHILE', 'AND', 'OR', '#if'])
+    _conditions = {'WHILE', 'AND', 'OR', '#if'}
 
     def _is_condition(self, token, last_token):
         if token == ':' and last_token == ')':

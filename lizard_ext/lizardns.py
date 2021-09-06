@@ -48,10 +48,12 @@ class LizardExtension(ExtensionBase):  # pylint: disable=R0903
     FUNCTION_INFO = {"max_nested_structures": {"caption": "  NS  "}}
 
     # TODO: Delegate this to language readers  # pylint: disable=fixme
-    structures = set(['if', 'else', 'elif', 'for', 'foreach', 'while',
-                      'do', 'try', 'catch', 'switch', 'finally',
-                      'except', 'with'])
-    matching_structures = set(['else', 'elif', 'catch', 'finally'])
+    structures = {
+        'if', 'else', 'elif', 'for', 'foreach', 'while',
+        'do', 'try', 'catch', 'switch', 'finally',
+        'except', 'with'
+    }
+    matching_structures = {'else', 'elif', 'catch', 'finally'}
 
     @staticmethod
     def set_args(parser):

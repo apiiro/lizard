@@ -28,8 +28,10 @@ class PythonIndents:  # pylint: disable=R0902
 class PythonReader(CodeReader, ScriptLanguageMixIn):
     ext = ['py']
     language_names = ['python']
-    _conditions = set(['if', 'for', 'while', 'and', 'or',
-                       'elif', 'except', 'finally'])
+    _conditions = {
+        'if', 'for', 'while', 'and', 'or',
+        'elif', 'except', 'finally'
+    }
 
     def __init__(self, context):
         super(PythonReader, self).__init__(context)
